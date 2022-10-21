@@ -1,0 +1,23 @@
+.tree-node-name {
+    display: inline-block;
+    /* margin-bottom: 1px; */
+}
+
+.tree-node-container {
+margin-bottom: 10px;
+position: relative;
+}
+
+.tree-node-child {
+    padding: 3px 20px;
+    position: relative;
+    border-left: 1px solid black; 
+   
+}
+
+.selected-node {
+    background-color: var(--bs-secondary);
+    color: white;
+    padding: 3px 7px;
+    border-radius: 10px;
+}

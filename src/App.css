@@ -1,0 +1,25 @@
+:root {
+  --nav-height: 100px;
+  --body-height: calc(100vh - var(--nav-height));
+
+}
+
+.my-nav{
+  height: var(--nav-height) !important;
+}
+
+#note-container {
+  /* box-sizing: border-box; */
+  /* width: 100vw; */
+  height: var(--body-height);
+}
+
+#project-tree-column {
+  /* padding: 0px; */
+
+}
+
+#project-note-column {
+  /* padding: 0px; */
+
+}
