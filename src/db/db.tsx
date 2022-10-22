@@ -8,7 +8,7 @@ import {
   uuid,
 } from "../types/types";
 import { v4 as uuidv4 } from "uuid";
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 
 export function useNotes() {
   const { state: noteMap, setState: _setNoteMap } =
@@ -89,17 +89,32 @@ export function useSingleNote(uuid: string) {
     setSelectedUUID(node.uuid);
   }
 
+  function _getNameIfConflict(
+    suggistedName: string,
+    names: string[],
+    num: number
+  ): string {
+    return names.includes(`${suggistedName} ${num}`)
+      ? _getNameIfConflict(suggistedName, names, num + 1)
+      : `${suggistedName} ${num}`;
+  }
+
   function createFileForSelected(name: string) {
-    const parent: NoteDirType =  isNoteDir(selectedNode)
-    ? selectedNode
-    : getNode(selectedNode.parent!) as NoteDirType;
+    const parent: NoteDirType = isNoteDir(selectedNode)
+      ? selectedNode
+      : (getNode(selectedNode.parent!) as NoteDirType);
+
+    const otherFilesNames = parent.files.map((uuid) => getNode(uuid).name);    
+    name = otherFilesNames.includes(name)
+      ? _getNameIfConflict(name, otherFilesNames, 1)
+      : name;
 
     const newFile: NoteFileType = {
       uuid: uuidv4(),
       name,
       body: "",
       images: [],
-      parent: parent.uuid
+      parent: parent.uuid,
     };
 
     parent.files.push(newFile.uuid);
@@ -113,20 +128,26 @@ export function useSingleNote(uuid: string) {
   }
 
   function createDirForSelected(name: string) {
-    const parent: NoteDirType =  isNoteDir(selectedNode)
-    ? selectedNode
-    : getNode(selectedNode.parent!) as NoteDirType;
+    const parent: NoteDirType = isNoteDir(selectedNode)
+      ? selectedNode
+      : (getNode(selectedNode.parent!) as NoteDirType);
 
-    const newFile: NoteDirType = {
+      const otherDirsNames = parent.directories.map((uuid) => getNode(uuid).name);    
+      name = otherDirsNames.includes(name)
+        ? _getNameIfConflict(name, otherDirsNames, 1)
+        : name;
+  
+
+    const newDir: NoteDirType = {
       uuid: uuidv4(),
       name,
       directories: [],
       files: [],
-      parent: parent.uuid
+      parent: parent.uuid,
     };
 
-    parent.directories.push(newFile.uuid);
-    note.content[newFile.uuid] = newFile;
+    parent.directories.push(newDir.uuid);
+    note.content[newDir.uuid] = newDir;
 
     const newNote: NoteProjectType = {
       ...note,
@@ -135,30 +156,60 @@ export function useSingleNote(uuid: string) {
     setNote(newNote);
   }
 
-
   function getParentChain(uuid: uuid): uuid[] {
-    const res: uuid[] = []
+    const res: uuid[] = [];
 
-    let current = getNode(uuid)
+    let current = getNode(uuid);
 
-    while(current != null){
-      res.push(current.uuid)
-      if (current.parent === undefined){
-        break
+    while (current != null) {
+      res.push(current.uuid);
+      if (current.parent === undefined) {
+        break;
       } else {
-        current = getNode(current.parent)
+        current = getNode(current.parent);
       }
     }
 
-    res.reverse()
-    return res
+    res.reverse();
+    return res;
   }
 
+  function updateText(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    if (!isNoteDir(selectedNode)) {
+      setNote((oldNote) => {
+        const newNote = { ...oldNote };
+        const content = newNote.content[selectedNode.uuid] as NoteFileType;
+        content.body = e.target.value;
 
-  return { note, selectNode, selectedNode, createFileForSelected, createDirForSelected, getNode, getParentChain };
+        return newNote;
+      });
+    }
+  }
+
+  function renameSelected(name: string) {
+    selectedNode.name = name;
+    setNote((oldNote) => {
+      const newNote = { ...oldNote };
+      const content = newNote.content[selectedNode.uuid];
+      content.name = name;
+
+      return newNote;
+    });
+  }
+
+  return {
+    note,
+    selectNode,
+    selectedNode,
+    createFileForSelected,
+    createDirForSelected,
+    getNode,
+    getParentChain,
+    updateText,
+    renameSelected,
+  };
 }
 
 function _saveNoteToDb(note: NoteProjectType) {
   localStorage.setItem(`note-${note.uuid}`, JSON.stringify(note));
 }
-

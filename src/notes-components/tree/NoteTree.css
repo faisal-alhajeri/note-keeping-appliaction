@@ -1,7 +1,4 @@
-.tree-node-name {
-    display: inline-block;
-    /* margin-bottom: 1px; */
-}
+
 
 .tree-node-container {
 margin-bottom: 10px;
@@ -15,9 +12,24 @@ position: relative;
    
 }
 
+.tree-node-name {
+    display: inline-block;
+    word-wrap: normal;
+    width: max-content;
+    /* margin-bottom: 1px; */
+}
+
 .selected-node {
     background-color: var(--bs-secondary);
     color: white;
     padding: 3px 7px;
     border-radius: 10px;
+}
+
+#rename-input {
+    outline: none;
+    border-radius: 10px;
+    border: 1px solid var(--bs-secondary);
+    padding: 0px 10px;
+    
 }

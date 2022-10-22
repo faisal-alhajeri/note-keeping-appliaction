@@ -16,8 +16,10 @@ export type SingleNoteCtxValues = {
   selectedNode: NoteDirType | NoteFileType;
   createFileForSelected: (name: string) => void;
   createDirForSelected: (name: string) => void;
-  getNode: (uuid: uuid) => NoteDirType | NoteFileType
-  getParentChain: (uuid: uuid) => uuid[]
+  getNode: (uuid: uuid) => NoteDirType | NoteFileType;
+  getParentChain: (uuid: uuid) => uuid[];
+  updateText: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  renameSelected : (name: string) => void
 };
 
 const ctx = React.createContext({} as SingleNoteCtxValues);
@@ -33,18 +35,34 @@ export default function SingleNoteProvider({
   children: any;
   noteUUID: uuid;
 }) {
-  
-  const {note,selectNode, selectedNode, createDirForSelected, createFileForSelected , getNode, getParentChain} = useSingleNote(noteUUID)
+  const {
+    note,
+    selectNode,
+    selectedNode,
+    createDirForSelected,
+    createFileForSelected,
+    getNode,
+    getParentChain,
+    updateText,
+    renameSelected,
+  } = useSingleNote(noteUUID);
   const navigate = useNavigate();
 
   if (note === undefined) {
     navigate("/", { replace: true });
   }
 
-
-
-
-  const ctxValues = { note, selectNode, selectedNode, createFileForSelected, createDirForSelected, getNode, getParentChain};
+  const ctxValues = {
+    note,
+    selectNode,
+    selectedNode,
+    createFileForSelected,
+    createDirForSelected,
+    getNode,
+    getParentChain,
+    updateText,
+    renameSelected,
+  };
 
   return <ctx.Provider value={ctxValues}>{children}</ctx.Provider>;
 }

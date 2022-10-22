@@ -38,3 +38,20 @@ export type NoteProjectType = {
 export type NoteNameUUIDMap = {
     [name: string] : string
 }
+
+
+
+// falsh messages 
+
+
+export enum messegesTypes {
+    ERROR = "danger",
+    SUCCESS = "success",
+  }
+  
+  export type flashMessegeType = {
+    id: string;
+    messege: string;
+    type: messegesTypes;
+  };
+  
