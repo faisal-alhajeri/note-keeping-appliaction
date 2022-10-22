@@ -141,23 +141,6 @@ export default function NoteTreeContainer() {
             <FontAwesomeIcon icon={faFolder} />
           </Button>
 
-          {/* get next button */}
-          <Button
-            className="mx"
-            variant="outline-secondary"
-            onClick={() => selectNext()}
-          >
-            <FontAwesomeIcon icon={faAdd} />
-          </Button>
-
-          {/* get prev button */}
-          <Button
-            className="mx"
-            variant="outline-secondary"
-            onClick={() => selectPrev()}
-          >
-            <FontAwesomeIcon icon={faMinus} />
-          </Button>
         </div>
       </div>
 
