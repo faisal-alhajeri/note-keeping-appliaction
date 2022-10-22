@@ -6,8 +6,6 @@ export type imageType = {
 export type NoteFileType = {
     uuid: string
     name: string
-    body?: string
-    images: imageType[]
     parent?: uuid
 }
 export type uuid = string
@@ -17,6 +15,7 @@ export type NoteDirType = {
     name: string,
     directories: uuid[],
     files: uuid[],
+    hide: boolean
     parent?: uuid
 }
 

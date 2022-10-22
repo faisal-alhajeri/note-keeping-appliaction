@@ -6,14 +6,6 @@ import { useNotes } from "../db/db";
 export default function AllNotes() {
   const [searchWord, setSearchWord] = useState("");
   const { noteMap } = useNotes();
-
-    console.log(noteMap["asdsad"]);
-    console.log(
-      JSON.parse(
-
-        localStorage.getItem(`note-${noteMap["asdsad"]}`)!
-      )
-    );
     
 
   return (

@@ -9,6 +9,7 @@ export default function FlashMssagesContainer() {
 
   const style= {
     bottom: "0%",
+    zIndex: 1000
     // translate: "0% -110%",
   }
 

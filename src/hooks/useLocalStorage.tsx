@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 export default function useLocalStorage<T>(key: string, init: T | (() => T)) {
   const [state, setState] = useState<T>(() => {
     const oldValue = localStorage.getItem(key);
-    // localStorage.removeItem(key)
+    // localStorage.clear()
     
     if (oldValue !== null) {
       
@@ -18,6 +18,23 @@ export default function useLocalStorage<T>(key: string, init: T | (() => T)) {
     }
   });
 
+  useEffect(() => {
+
+    setState((_) => {
+      const oldValue = localStorage.getItem(key);
+      
+      if (oldValue !== null) {
+        return JSON.parse(oldValue);
+      } 
+
+      if (typeof init === "function") {
+        return (init as () => T)();
+      } else {
+        return init as T;
+      }
+  
+    })
+  }, [key])
 
   useEffect(() => {
     localStorage.setItem(key, JSON.stringify(state))

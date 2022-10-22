@@ -22,16 +22,13 @@ type props = {
 export default function TreeFileDirSlot({ node, ...props }: props) {
   const dirNode = node as NoteDirType;
   const fileNode = node as NoteFileType;
-  const [hideDir, setHideDir] = useState(false);
-  const { selectedNode, selectNode, getNode } = useSingleNoteContext();
+  const { selectedNode, selectNode, getNode, toggleHide } = useSingleNoteContext();
   // console.log(node);
 
   const isDir: boolean = isNoteDir(node);
   const isRoot: boolean = node.parent === undefined;
 
-  function toggleHide() {
-    setHideDir((oldHide) => !oldHide);
-  }
+
 
   // show the plus minus sign before directories
   function _showIcon() {
@@ -44,7 +41,7 @@ export default function TreeFileDirSlot({ node, ...props }: props) {
     // return isDir;
     return (
       isDir &&
-      !hideDir &&
+      !dirNode.hide &&
       (dirNode.directories.length > 0 || dirNode.files.length > 0)
     );
   }
@@ -55,19 +52,19 @@ export default function TreeFileDirSlot({ node, ...props }: props) {
 
   function gethideShowIcon() {
     return _showIcon() ? (
-      hideDir ? (
+      dirNode.hide ? (
         <FontAwesomeIcon
           className="pe-2"
           icon={faPlus}
           size={"2xs"}
-          onClick={toggleHide}
+          onClick={() => toggleHide(dirNode.uuid)}
         />
       ) : (
         <FontAwesomeIcon
           className="pe-2"
           icon={faMinus}
           size={"2xs"}
-          onClick={toggleHide}
+          onClick={() => toggleHide(dirNode.uuid)}
         />
       )
     ) : undefined;

@@ -1,7 +1,9 @@
 import {
+  faAdd,
   faFileAlt,
   faFileSignature,
   faFolder,
+  faMinus,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,6 +26,10 @@ export default function NoteTreeContainer() {
     getNode,
     selectedNode,
     renameSelected,
+    selectNext,
+    selectPrev,
+    show,
+    hide,
   } = useSingleNoteContext();
   const [reanameMode, setReanameMode] = useState(false);
   const renameInputRef = useRef<HTMLInputElement>(null);
@@ -32,6 +38,44 @@ export default function NoteTreeContainer() {
   useEffect(() => {
     if (reanameMode) renameInputRef.current?.focus();
   }, [reanameMode]);
+
+  // Keybord Controls
+  useEffect(() => {
+    function handler(e: KeyboardEvent) {
+      if (e.ctrlKey && e.altKey) {
+        switch (e.key) {
+          case "ArrowDown":
+            selectNext();
+            break;
+
+          case "ArrowUp":
+            selectPrev();
+            break;
+
+          case "ArrowRight":
+            show(selectedNode.uuid);
+            break;
+
+          case "ArrowLeft":
+            hide(selectedNode.uuid);
+            break;
+
+          case "d":
+            createDirForSelected("new folder");
+            break;
+
+          case "f":
+            createFileForSelected("new file");
+            break;
+        }
+      }
+    }
+
+    document.onkeydown = handler;
+    return () => {
+      document.onkeydown = null;
+    };
+  }, [selectedNode, selectNext, selectPrev, createDirForSelected, createFileForSelected]);
 
   function handleRename(e: React.FormEvent) {
     e.preventDefault();
@@ -95,6 +139,24 @@ export default function NoteTreeContainer() {
             onClick={() => createDirForSelected("new folder")}
           >
             <FontAwesomeIcon icon={faFolder} />
+          </Button>
+
+          {/* get next button */}
+          <Button
+            className="mx"
+            variant="outline-secondary"
+            onClick={() => selectNext()}
+          >
+            <FontAwesomeIcon icon={faAdd} />
+          </Button>
+
+          {/* get prev button */}
+          <Button
+            className="mx"
+            variant="outline-secondary"
+            onClick={() => selectPrev()}
+          >
+            <FontAwesomeIcon icon={faMinus} />
           </Button>
         </div>
       </div>
