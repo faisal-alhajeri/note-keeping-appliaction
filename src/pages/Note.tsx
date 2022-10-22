@@ -8,19 +8,13 @@ import NoteTreeContainer from "../notes-components/tree/NoteTreeContainer";
 
 export default function Note() {
   const { uuid } = useParams();
-  const { getNote } = useNotes();
-  const note = useMemo(() => getNote((uuid as string) ?? ""), [uuid]);
-  const navigate = useNavigate();
 
 
-  if (note === undefined) {
-    navigate("/", { replace: true });
-  }
 
   return (
     <>
-      {note && (
-        <SingleNoteProvider note={note}>
+      {uuid && (
+        <SingleNoteProvider noteUUID={uuid}>
           <div id="note-container">
             <Row style={{ height: "100%", width: "100%", margin: "0px" }}>
               <Col id="project-tree-column" xs={3} className="border">

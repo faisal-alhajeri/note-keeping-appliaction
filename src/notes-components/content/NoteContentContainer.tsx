@@ -8,12 +8,18 @@ type props = {
 
 
 export default function NoteContentContainer() {
-  const {selectedNode} = useSingleNoteContext()
+  const {selectedNode, getParentChain, getNode} = useSingleNoteContext()
 
 
   // console.log(se);
   
   return (
-    <div>{selectedNode.name}</div>
+    <>
+      <div className='bg-secondary p-2 text-light'>
+          {getParentChain(selectedNode.uuid).map(uuid => {
+            return <div>{getNode(uuid).name}</div>
+          })}
+      </div>
+    </>
   )
 }

@@ -6,7 +6,6 @@ export default function useLocalStorage<T>(key: string, init: T | (() => T)) {
     // localStorage.removeItem(key)
     
     if (oldValue !== null) {
-      console.log(oldValue);
       
       return JSON.parse(oldValue);
     } 
@@ -24,6 +23,7 @@ export default function useLocalStorage<T>(key: string, init: T | (() => T)) {
     localStorage.setItem(key, JSON.stringify(state))
   }, [state])
 
+  // not working well
   async function save(){
     await localStorage.setItem(key, JSON.stringify(state))
   }

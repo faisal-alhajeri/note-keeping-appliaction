@@ -11,10 +11,10 @@ type props = {
 };
 
 export default function NoteTreeContainer() {
-  const { note, createFileForSelected, createDirForSelected } = useSingleNoteContext();
+  const { note, createFileForSelected, createDirForSelected, getNode} = useSingleNoteContext();
 
   return (
-    <div className="my-2">
+    <div className="my-2" >
       <div className="d-flex justify-content-between">
         <h5>Project: {note.name}</h5>
         <div>
@@ -38,7 +38,7 @@ export default function NoteTreeContainer() {
       </div>
 
       <div>
-        <TreeFileDirSlot node={note.root} isDir />
+        <TreeFileDirSlot node={getNode(note.root)} />
       </div>
     </div>
   );
