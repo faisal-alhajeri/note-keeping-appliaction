@@ -6,6 +6,7 @@ import {
   NoteNameUUIDMap,
   NoteProjectType,
   uuid,
+  ImageType,
 } from "../types/types";
 import { v4 as uuidv4 } from "uuid";
 import React, { useEffect, useMemo, useState } from "react";
@@ -80,17 +81,7 @@ export function useSingleNote(uuid: string) {
   // hidden nodes will not be in the map
   // once node is being shown then the note map will be recalculated
 
-  const noteMap = useMemo(() => {
-    let map = _NoteMap();
-    console.log('-------------------------');
-    console.log('current: ',selectedNode.name);
-    map.forEach(uuid => {
-      console.log(getNode(uuid).name,uuid);
-    })
-    console.log('-------------------------');
-
-    return map;
-  }, [note]);
+  const noteMap = useMemo(() => _NoteMap(), [note]);
 
   function _dir(node: NoteFileType | NoteDirType): NoteDirType {
     return node as NoteDirType;
@@ -297,8 +288,6 @@ export function useSingleNote(uuid: string) {
 
     if (idxOfSelected === noteMap.length - 1) return;
 
-
-
     setSelectedUUID(noteMap[idxOfSelected + 1]);
   }
 
@@ -342,12 +331,36 @@ export function useNoteNodeBody(note: NoteProjectType, node: NoteFileType) {
 }
 
 export function useNoteNodeimages(note: NoteProjectType, node: NoteFileType) {
-  const { state: images, setState: setImages } = useLocalStorage<string[]>(
-    `note-${note.uuid}-${node.uuid}-body`,
+  const { state: images, setState: setImages } = useLocalStorage<ImageType[]>(
+    `note-${note.uuid}-${node.uuid}-images`,
     []
   );
 
-  return { images, setImages };
+  function saveImage(src: string) {
+    const image: ImageType = {
+      uuid: uuidv4(),
+      src,
+    };
+
+    setImages((oldImages) => [...oldImages, image]);
+  }
+
+  function saveImages(srcs: string[]) {
+    const images: ImageType[] = srcs.map((src) => {
+      return {
+        uuid: uuidv4(),
+        src,
+      };
+    });
+
+    setImages((oldImages) => [...oldImages, ...images]);
+  }
+
+  function deleteImage(uuid: uuid) {
+    setImages((oldImages) => oldImages.filter((image) => image.uuid !== uuid));
+  }
+
+  return { images, saveImages, saveImage, deleteImage };
 }
 
 // TODO: craete keyboard controls

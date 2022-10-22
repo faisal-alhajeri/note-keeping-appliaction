@@ -1,4 +1,4 @@
-export type imageType = {
+export type ImageType = {
     uuid: string
     src: string
 }

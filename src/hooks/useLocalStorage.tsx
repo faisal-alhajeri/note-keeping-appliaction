@@ -3,8 +3,6 @@ import React, { useEffect, useState } from "react";
 export default function useLocalStorage<T>(key: string, init: T | (() => T)) {
   const [state, setState] = useState<T>(() => {
     const oldValue = localStorage.getItem(key);
-    // localStorage.removeItem(key)
-    console.log(localStorage.getItem(key))
     
     if (oldValue !== null) {
       
