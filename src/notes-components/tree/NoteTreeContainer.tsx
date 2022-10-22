@@ -142,7 +142,7 @@ export default function NoteTreeContainer() {
           </Button>
 
         </div>
-      </div>
+      </div> 
 
       <div>
         <TreeFileDirSlot node={getNode(note.root)} />
