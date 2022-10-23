@@ -10,22 +10,18 @@ import NoteTreeContainer from "../notes-components/tree/NoteTreeContainer";
 export default function Note() {
   const { uuid } = useParams();
 
-
-
   return (
     <>
       {uuid && (
         <SingleNoteProvider noteUUID={uuid}>
           <div id="note-container">
             <FlashMssagesContainer />
-            <Row style={{ height: "100%", width: "100%", margin: "0px" }}>
-              <Col id="project-tree-column" xs={3} className="">
-                <NoteTreeContainer />
-              </Col>
-              <Col id="project-note-column" xs={9} className="">
-                <NoteContentContainer />
-              </Col>
-            </Row>
+            <div id="project-tree-column" className="">
+              <NoteTreeContainer />
+            </div>
+            <div id="project-note-column" className="">
+              <NoteContentContainer />
+            </div>
           </div>
         </SingleNoteProvider>
       )}
