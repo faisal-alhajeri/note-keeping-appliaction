@@ -22,7 +22,7 @@ you can keep your notes only in files.
 </p>
 
 <p> 
-saving images will be introduced soon.
+notes can have images too.
 </p>
 
 <h2>Shortcuts</h2>
@@ -54,6 +54,10 @@ there are some useful shortcuts to make experience better
   
   <li> 
     <code>CTRL + ALT +	D</code> to create a folder
+  </li>
+  
+  <li> 
+    <code>CTRL + ALT +	R</code> to rename a folder
   </li>
 </ul>
 </p>
