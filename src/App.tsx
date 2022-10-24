@@ -1,6 +1,7 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
+import 'react-quill/dist/quill.snow.css';
 import { Navbar, NavbarBrand } from "react-bootstrap";
 import { Route, Routes } from "react-router-dom";
 import AllNotes from "./pages/AllNotes";

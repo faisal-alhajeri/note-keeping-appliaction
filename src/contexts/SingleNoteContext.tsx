@@ -24,6 +24,10 @@ export type SingleNoteCtxValues = {
   selectPrev: () => void;
   show: (uuid: uuid) => void
   hide: (uuid: uuid) => void
+  hideImages: boolean,
+  toggleHideImages: () => void
+  reanameMode: boolean,
+  setReanameMode: any
 };
 
 const ctx = React.createContext({} as SingleNoteCtxValues);
@@ -39,6 +43,10 @@ export default function SingleNoteProvider({
   children: any;
   noteUUID: uuid;
 }) {
+  const [reanameMode, setReanameMode] = useState(false);
+  const [hideImages, _setHideImages] = useState(true)
+
+
   const {
     note,
     selectNode,
@@ -60,7 +68,14 @@ export default function SingleNoteProvider({
     navigate("/", { replace: true });
   }
 
-  const ctxValues = {
+ 
+  function toggleHideImages(){
+      _setHideImages(old => !old)
+  }
+ 
+
+
+  const ctxValues: SingleNoteCtxValues = {
     note,
     selectNode,
     selectedNode,
@@ -74,6 +89,10 @@ export default function SingleNoteProvider({
     selectPrev,
     show,
     hide,
+    hideImages,
+    toggleHideImages,
+    reanameMode,
+    setReanameMode
   };
 
   return <ctx.Provider value={ctxValues}>{children}</ctx.Provider>;

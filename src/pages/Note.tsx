@@ -20,7 +20,7 @@ export default function Note() {
               <NoteTreeContainer />
             </div>
             <div id="project-note-column" className="">
-              <NoteContentContainer />
+                <NoteContentContainer />
             </div>
           </div>
         </SingleNoteProvider>

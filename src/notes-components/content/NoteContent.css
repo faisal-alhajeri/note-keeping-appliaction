@@ -1,18 +1,75 @@
 .note-image-container {
-    padding: 20px;
-    width: 100%;
-    position: relative;
-    overflow-x: hidden;
+  padding: 20px;
+  width: 100%;
+  position: relative;
+  /* overflow-x: hidden; */
+  /* overflow: scroll; */
 }
 
 .note-image-container img {
-    border: 3px solid black;
-    width: 100%;
-    object-fit: contain;
+  border: 3px solid black;
+  width: 100%;
+  object-fit: contain;
+  border-radius: 10px;
 }
 
 .note-image-container .image-delete-button {
-    position: absolute;
-    right: 30px;
-    top: 30px;
+  position: absolute;
+  right: 30px;
+  top: 30px;
+}
+
+#node-text-input:focus {
+  outline: none;
+}
+
+#node-text-input {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background-color: whitesmoke;
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+
+#node-text-input.scrollable {
+  flex: 0 0 auto;
+  height: 50%;
+  resize: vertical !important;
+  overflow: scroll;
+}
+
+#node-images-input {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--bs-secondary);
+  color: white;
+  border-top: 0.5px solid var(--bs-dark);
+  border-left: 0.5px solid var(--bs-dark);
+  overflow-y: scroll;
+  overflow-x: hidden;
+  flex: 1 1 auto;
+}
+
+#node-images-input-hidden {
+  flex: 0 0 35px;
+padding: 10px 20px;
+color: white;
+display: flex;
+justify-content: end;
+align-items: center;
+  background-color: var(--bs-secondary);
+}
+
+/*  quill */
+
+.quill {
+  width: 100%;
+  height: calc(100% - 48.3px);
+}
+
+.ql-editor {
+  background-color: white;
 }
