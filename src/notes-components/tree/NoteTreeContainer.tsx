@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useSingleNoteContext } from "../../contexts/SingleNoteContext";
+import useKeybordControls from "../../features/keyborad-controls/useKeybordControls";
 import { useFlashMesseges } from "../../flash-messages/context/FlashMessegesContext";
 import { isNoteDir, NoteDirType, NoteProjectType } from "../../types/types";
 import TreeFileDirSlot from "./TreeFileDirSlot";
@@ -39,6 +40,8 @@ export default function NoteTreeContainer() {
   useEffect(() => {
     if (reanameMode) renameInputRef.current?.focus();
   }, [reanameMode]);
+
+  useKeybordControls()
 
 
   function handleRename(e: React.FormEvent) {
