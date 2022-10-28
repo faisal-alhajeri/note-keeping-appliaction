@@ -51,6 +51,12 @@ export function useNotes() {
 
   function deleteNote(name: string) {
     const noteUUID = noteMap[name];
+    const  note  = JSON.parse(localStorage.getItem(`note-${noteUUID}`)!)
+    
+    for (const nodeUUID in note) {
+      localStorage.removeItem(`note-${noteUUID}-${nodeUUID}-body`);
+      localStorage.removeItem(`note-${noteUUID}-${nodeUUID}-images`);
+    }
     localStorage.removeItem(`note-${noteUUID}`);
 
     _setNoteMap((old) => {
@@ -362,6 +368,3 @@ export function useNoteNodeimages(note: NoteProjectType, node: NoteFileType) {
 
   return { images, saveImages, saveImage, deleteImage };
 }
-
-// TODO: craete keyboard controls
-export function useControls() {}

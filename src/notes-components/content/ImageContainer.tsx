@@ -10,6 +10,7 @@ import React, { useRef, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { useSingleNoteContext } from "../../contexts/SingleNoteContext";
 import { useNoteNodeimages } from "../../db/db";
+import { useFlashMesseges } from "../../flash-messages/context/FlashMessegesContext";
 import { NoteFileType } from "../../types/types";
 import NoteImage from "./NoteImage";
 
@@ -30,6 +31,8 @@ export default function ImageContainer() {
     note,
     selectedNode as NoteFileType
   );
+  const {addErrorMessege} = useFlashMesseges()
+
   const [imageZoom, setImageZoom] = useState(2);
 
   function zoomInImages() {
@@ -45,10 +48,17 @@ export default function ImageContainer() {
   function handleUploadImages(e: React.ChangeEvent<HTMLInputElement>) {
     for (const file of e.target.files!) {
       const reader = new FileReader();
-      reader.onload = () => {
-        saveImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      try{
+        reader.onload = () => {
+          saveImage(reader.result as string);
+  
+        };
+        reader.readAsDataURL(file);
+      } catch(e){
+        addErrorMessege(`your file is too big`)
+      }
+      
+
     }
   }
   return (

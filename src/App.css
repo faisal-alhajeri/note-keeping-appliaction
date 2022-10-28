@@ -17,12 +17,13 @@
 }
 
 #project-tree-column {
-  border: 2px solid var(--bs-border-color);
+  padding: 10px;
+  border-right: 2px solid var(--bs-border-color);
   height: 100%;
   overflow-y: scroll;
   resize: horizontal;
   flex: 0 0 auto;
-  min-width: 20%;
+  min-width: 25%;
   max-width: 50%;
 
 }
@@ -36,7 +37,24 @@
   flex-direction: column;
 }
 
+.note-open-button {
+  background-color: inherit;
+  border-radius: 11px;
+  border: none;
 
+}
+
+.note-open-button:hover{
+  background-color: var(--bs-secondary);
+  color: white;
+}
+
+input.form-control{
+  padding-left: 40px;
+  background-image: url(./assets/magnifying-glass.png);
+  background-position: 10px 7.5px;
+  background-size: 20px 20px;
+  background-repeat: no-repeat; }
 
 
 ::-webkit-scrollbar{
@@ -56,5 +74,11 @@
 ::-webkit-scrollbar-thumb{
   background-color: var(--bs-secondary);
   border-radius: 100vw;
+  /* margin-block: 10px; */
+}
+
+
+#node-images-input::-webkit-scrollbar-thumb{
+  background-color: var(--bs-light);
   /* margin-block: 10px; */
 }
