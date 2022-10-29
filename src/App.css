@@ -41,15 +41,18 @@
   background-color: inherit;
   border-radius: 11px;
   border: none;
-
+  transition: ease-out 0.15s;
 }
+
 
 .note-open-button:hover{
   background-color: var(--bs-secondary);
   color: white;
 }
 
-input.form-control{
+
+
+input.search-form{
   padding-left: 40px;
   background-image: url(./assets/magnifying-glass.png);
   background-position: 10px 7.5px;

@@ -10,13 +10,12 @@ export default function AllNotes() {
   return (
     <>
       <Container className="d-flex flex-column justify-content-left align-items-center my-5">
-        {/* TODO: implement search feature */}
 
         <input
           style={{ maxWidth: "400px" }}
           onChange={(e) => setSearchWord(e.target.value)}
           value={searchWord}
-          className='form-control'
+          className='form-control search-form'
         />
 
         <div
@@ -39,7 +38,7 @@ export default function AllNotes() {
             style={{ position: "absolute", right: "50px", top: "20px" }}
             to={"/create"}
           >
-            <Button variant="outline-primary">Create New</Button>
+            <Button variant="outline-secondary">Create New</Button>
           </Link>
         </div>
       </Container>
